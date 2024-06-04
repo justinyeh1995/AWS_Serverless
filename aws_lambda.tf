@@ -8,7 +8,7 @@ resource "aws_lambda_function" "visitor_count_function" {
   filename         = data.archive_file.lambda.output_path
   function_name    = "VisitorCountFunction"
   role             = aws_iam_role.lambda_role.arn
-  handler          = "rest-api/lambda_function.lambda_handler"
+  handler          = "lambda_function.lambda_handler"
   runtime          = "python3.10"
 
   source_code_hash = data.archive_file.lambda.output_base64sha256
