@@ -1,8 +1,6 @@
 # Input variable definitions
 
-# variable "aws_region" {
-#   description = "AWS region for all resources."
-
-#   type    = string
-#   default = "us-east-2"
-# }
+output "base_url" {
+  description = "Base URL for API Gateway stage."
+  value = aws_apigatewayv2_stage.default_stage.invoke_url
+}
