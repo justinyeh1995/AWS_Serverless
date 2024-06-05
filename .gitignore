@@ -33,4 +33,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-.zip
+*.zip
+node_modules/
+package-lock.json
