@@ -33,6 +33,9 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+# Ignore Lock files
+*.lock.hcl
+
 *.zip
 node_modules/
 package-lock.json
