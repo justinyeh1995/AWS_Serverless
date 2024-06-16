@@ -1,0 +1,48 @@
+name: Deploy with Terraform and Test API with Cypress
+
+on:
+  push:
+    branches: [main]
+env:
+  REGION: ${{ secrets.AWS_REGION }}
+  IAM_ROLE: ${{ secrets.AWS_ASSUME_ROLE_ARN }} # this is a IAM role in AWS account store as secret in github account
+
+# permission can be added at job level or workflow level
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
+jobs:
+  terraform-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials with GitHub OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.REGION }}
+          role-to-assume: ${{ env.IAM_ROLE }}
+          role-session-name: my-github-actions-session
+      
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+      
+      - name: Update Infra with Terraform
+        run: | 
+          terraform init
+          terraform plan -out plan.tfplan
+          terraform apply -auto-approve plan.tfplan
+
+  cypress-tests:
+    needs: terraform-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+  
