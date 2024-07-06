@@ -5,7 +5,7 @@ on:
     branches: [main]
 env:
   REGION: ${{ secrets.AWS_REGION }}
-  IAM_ROLE: ${{ secrets.AWS_ASSUME_ROLE_ARN }} # this is a IAM role in AWS account store as secret in github account
+  IAM_ROLE: ${{ secrets.AWS_BACKEND_ASSUME_ROLE_ARN }} # this is a IAM role in AWS account store as secret in github account
 
 # permission can be added at job level or workflow level
 permissions:
