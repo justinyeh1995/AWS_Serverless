@@ -13,3 +13,5 @@ Run your IaC tool to deploy the resources in AWS.
 3. Smoke test step. 
 
 Run your Cypress API tests to make sure the deployed API does what you think it should.
+
+❗️ Always check your custom IAM policy & role before deploying your resources.
