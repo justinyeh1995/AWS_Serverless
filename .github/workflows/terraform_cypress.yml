@@ -39,9 +39,15 @@ jobs:
   cypress-tests:
     needs: terraform-deploy
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
       
       - name: Cypress run
         uses: cypress-io/github-action@v6
